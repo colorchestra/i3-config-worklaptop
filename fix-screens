@@ -1,0 +1,106 @@
+#!/bin/bash
+
+home_both() {
+	xrandr --output HDMI2 --auto --primary --pos 0x0 --output eDP1 --auto --pos 2560x790
+	setxkbmap us -variant altgr-intl
+	set_wallpaper
+}
+desk() {
+	# old driver # xrandr --output DP-2-2 --auto --primary --pos 0x0 --output eDP-1 --auto --pos 3440x540
+	xrandr --output DP2-2 --auto --primary --pos 0x0 --output eDP1 --auto --pos 3440x86
+	set_wallpaper
+}
+
+desk_only() {
+	xrandr --output DP2-2 --auto --pos 0x0 --output eDP1 --off
+}
+
+laptop() {
+	xrandr --output eDP1 --auto --primary --pos 0x0 --output DP2-2 --off --output HDMI2 --off 
+	setxkbmap us -variant altgr-intl
+
+#	xrandr --output eDP-1 --auto --primary --pos 0x0 --output VGA-1 --off --output DP-2-2 --off
+}
+
+serverraum() {
+	xrandr --output VGA1 --auto --pos 0x0 --output eDP1 --auto --pos 160x1080
+}
+
+pbp() {
+	xrandr --output DP2-2 --auto --pos 0x0 --output eDP1 --auto --pos 1720x540
+
+}
+
+set_wallpaper() {
+	feh --bg-scale ~/.i3/desktop_bg.jpg
+}
+
+case "$1" in
+	schreibtisch|desk)
+		desk
+		set_wallpaper
+	;;
+	schreibtisch-zuhause|home)
+		home_both
+		set_wallpaper
+	;;
+	server|serverraum|unten|keller)
+		serverraum
+		set_wallpaper
+	;;
+	pbp|halb)
+		pbp
+		set_wallpaper
+	;;
+	laptop)
+		laptop
+		set_wallpaper
+	;;
+	wallpaper|set_wallpaper)
+		set_wallpaper
+	;;	
+	detect|"")
+		# to do: add home_both to autodetect
+		echo "Autodetecting..."
+		XRANDROUTPUT=$(xrandr)
+		SCREENCOUNT=$(echo "$XRANDROUTPUT" | grep -c ' connected')
+		case "$SCREENCOUNT" in
+			1)
+				echo "1 screen found."
+				if [[ $(echo "$XRANDROUTPUT" | grep "eDP1 connected") ]]; then
+# old driver			if [[ $(echo "$XRANDROUTPUT" | grep "eDP-1 connected") ]]; then
+					echo "Only laptop built-in screen found. Activating as primary."
+					laptop
+				elif [[ $(echo "$XRANDROUTPUT" | grep -e "DP2-2 connected 3440x1440" -e "DP2-2 connected primary 3440x1440") ]] ; then
+# old driver			elif [[ $(echo "$XRANDROUTPUT" | grep -e "DP-2-2 connected 3440x1440" -e "DP-2-2 connected primary 3440x1440") ]] ; then
+					echo "Only huge-ass desk screen found. Activating as primary."
+					desk_only
+				else
+					echo "nope, deal with that yourself"
+				fi
+				;;
+			2)
+				echo "2 screens found."
+				if [[ $(echo "$XRANDROUTPUT" | grep "eDP1 connected")  ]]; then
+# old driver			if [[ $(echo "$XRANDROUTPUT" | grep "eDP-1 connected")  ]]; then
+					echo "Laptop screen detected..."
+					if [[ $(echo "$XRANDROUTPUT" | grep -e "DP2-2 connected" -e "DP2-2 connected primary 3440x1440") ]]; then
+# old driver				if [[ $(echo "$XRANDROUTPUT" | grep -e "DP-2-2 connected 3440x1440" -e "DP-2-2 connected primary 3440x1440") ]]; then
+						echo "...and huge-ass desk screen also detected. Activating both."
+						desk
+					else 
+						echo "...and something else detected. deal with that yourself."
+						echo "$XRANDROUTPUT" | grep "DP2-2 "
+# old driver					echo "$XRANDROUTPUT" | grep "DP-2-2 "
+					fi
+				fi
+				;;
+			*)
+				echo "nope, deal with that yourself"
+				;;
+		esac
+		;;
+	*)
+		echo "nope"
+	;;
+esac

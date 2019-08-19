@@ -179,7 +179,6 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-#        status_command ~/src/customi3status.sh
 	status_command "i3blocks -c ~/.i3/i3blocks.conf"
 #	status_command i3status
 	position bottom
@@ -201,9 +200,8 @@ exec --no-startup-id nextcloud
 # redhsift
 exec --no-startup-id redshift-gtk
 
-# pidgin got replaced with nagstamon
-# exec --no-startup-id pidgin
-# exec --no-startup-id nagstamon
+# nagstamon
+exec --no-startup-id nagstamon
 
 # Bildschirm sperren
 # i3lock breaks the monitor config... still looking for a good alternative, xscreensaver for now
@@ -215,9 +213,7 @@ bindsym $mod+Tab workspace next
 
 # bindsym $mod+space exec rofi -show drun	# hmmmmmmm
 bindsym $mod+space exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi,ssh,run,'nest:~/bin/fogtrack rofi-mode'"
-#bindsym $mod+space exec --no-startup-id ~/tools/start-rofi.sh
 bindsym $mod+y exec --no-startup-id ~/tools/y-rofi.sh
-bindsym $mod+c exec --no-startup-id ~/tools/fogtrack recent
 
 # set xrandr
 exec --no-startup-id /usr/bin/fix-screens detect
@@ -241,6 +237,7 @@ bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
 
 # screenshots
 bindsym Print exec --no-startup-id xfce4-screenshooter
+bindsym Shift+Print exec --no-startup-id xfce4-screenshooter -f
 
 # Bildschirmhintergrund
 exec --no-startup-id feh --bg-scale .i3/desktop_bg.jpg
