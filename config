@@ -213,7 +213,9 @@ bindsym $mod+Tab workspace next
 
 # bindsym $mod+space exec rofi -show drun	# hmmmmmmm
 bindsym $mod+space exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi,ssh,run,'nest:~/bin/fogtrack rofi-mode'"
-bindsym $mod+y exec --no-startup-id ~/tools/y-rofi.sh
+bindsym $mod+y exec --no-startup-id ~/bin/y-rofi
+bindsym $mod+$mod4+space exec --no-startup-id ~/.i3/rofi-s.sh
+
 
 # set xrandr
 exec --no-startup-id /usr/bin/fix-screens detect
@@ -230,6 +232,9 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute alsa_output.pci-0
 bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 bindsym XF86AudioNext exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 bindsym XF86AudioPrev exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+
+# Audacious controls via media keys
+# bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.audacious /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 
 # screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10

@@ -1,0 +1,9 @@
+add shah_meso ssh key,s
+fix-screens desk and start nagstamon,d
+set ANSI keyboard layout,k
+fix-screens laptop,
+open LPIC learning material,lp
+start nagstamon,n
+print randomly created string and pipe it to xclip,p
+restart pulseaudio,pu
+sleep 5s and xdotool type zwischenablage,x

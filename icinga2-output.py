@@ -6,7 +6,7 @@ import urllib3
 urllib3.disable_warnings()
 
 # source variables from secret.py
-exec(compile(source=open('secret').read(),filename='secret', mode='exec'))
+exec(compile(source=open('/home/m/.i3/secret').read(),filename='/home/m/.i3/secret', mode='exec'))
 
 client = Client(url, apiuser, apipass)
 
