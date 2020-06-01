@@ -113,11 +113,8 @@ workspace $tag5 output eDP1
 
 # test: assign application to workspace
 # WORKS
-# assign [class="Thunderbird"] $tag3
-# assign [title="monitor"] $tag4
 for_window [class="Spotify"] move to workspace $tag5	# workaround because spotify sucks
 assign [title="KeePassXC"] $tag4
-assign [class="Mattermost"] $tag3
 
 # switch to workspace
 bindsym $mod+1 workspace $tag1
@@ -180,7 +177,6 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
 	status_command "i3blocks -c ~/.i3/i3blocks.conf"
-#	status_command i3status
 	position bottom
 	tray_output primary
 }
@@ -200,9 +196,6 @@ exec --no-startup-id nextcloud
 # redhsift
 exec --no-startup-id redshift-gtk
 
-# nagstamon
-exec --no-startup-id nagstamon
-
 # Bildschirm sperren
 # i3lock breaks the monitor config... still looking for a good alternative, xscreensaver for now
 bindsym $mod+x exec --no-startup-id i3lock -c 000000
@@ -212,7 +205,7 @@ bindsym $mod+x exec --no-startup-id i3lock -c 000000
 bindsym $mod+Tab workspace next
 
 # bindsym $mod+space exec rofi -show drun	# hmmmmmmm
-bindsym $mod+space exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi,ssh,run,'nest:~/bin/fogtrack rofi-mode'"
+bindsym $mod+space exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi,ssh,run"
 bindsym $mod+y exec --no-startup-id ~/tools/y-rofi.sh
 
 # set xrandr
